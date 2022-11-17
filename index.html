@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Flat Earth Simulator</title>
+	<link rel="stylesheet" href="css\game.css"/>
+	<script src="js\jquery-3.6.1.min.js"></script>
+	<script src="js\game.js"></script>
+	<script src="js\ai.js"></script>
+</head>
+<body>
+	<div id="startMenu" class="menu visible">
+		<h1>Flat Earth Simulator</h1>
+		<button id="menuPlay" onclick="game.loadSaveInfo();game.changeView('#saveMenu')"><span> Play </span></button>
+		<br/>
+		<button id="menuSettings" onclick="game.changeView('#settingsMenu')"><span> Settings </span></button>
+		<br/>
+		<button id="menuCredits" onclick="game.changeView('#creditsMenu')"><span> Credits </span></button>
+		<br/>
+		<button id="menuExit" onclick="window.close()"><span> Exit </span></button>
+	</div>
+	<div id="saveMenu" class="menu hidden">
+		<div id="saveSlot1" class="saveSlot">
+			<h3 id="saveSlot1Name" class="saveTitle">Empty Slot</h3>
+			<p>Time: <span id="saveSlot1Time" class="saveTime"></span></p>
+			<button id="saveSlot1Play" onclick="game.changeView('#saveCreationSettingsMenu', true, 0);" class="savePlay"><span> New Game </span></button>
+		</div>
+		<br/>
+		<div id="saveSlot2" class="saveSlot">
+			<h3 id="saveSlot2Name" class="saveTitle">Empty Slot</h3>
+			<p>Time: <span id="saveSlot2Time" class="saveTime"></span></p>
+			<button id="saveSlot2Play" onclick="game.changeView('#saveCreationSettingsMenu', true, 1);" class="savePlay"><span> New Game </span></button>
+		</div>
+		<br/>
+		<div id="saveSlot3" class="saveSlot">
+			<h3 id="saveSlot3Name" class="saveTitle">Empty Slot</h3>
+			<p>Time: <span id="saveSlot3Time" class="saveTime"></span></p>
+			<button id="saveSlot3Play" onclick="game.changeView('#saveCreationSettingsMenu', true, 2);" class="savePlay"><span> New Game </span></button>
+		</div>
+		<br/>
+		<button id="saveBack" onclick="game.changeView('#startMenu')"><span> Back </span></button>
+	</div>
+	<div id="saveCreationSettingsMenu" class="menu hidden">
+		<input type="text" id="saveCreationSettingsTitle" oninput="game.updateNamingBox()" placeholder="New Game">
+		<br/>
+		<button id="saveCreationSettingsSubmit" onclick="game.initSave()"> Create ‘<span id="saveCreationSettingsSaveTitle">New Game' </span></button>
+		<br/>
+		<button id="saveCreationSettingsBack" onclick="game.changeView('#saveMenu')"><span> Back </span></button>
+	</div>
+	<div id="settingsMenu" class="menu hidden">
+		<button id="resetAllUserData" onclick="game.changeView('#resetAllUserDataMenu')"><span> Reset all user data </span></button>
+		</p>
+		<button id="settingsBack" onclick="game.changeView('#startMenu')"><span> Back </span></button>
+	</div>
+	<div id="creditsMenu" class="menu hidden">
+		<h3>This game was created by Liam Vaughan, Zachary Yule and Ethan Coiera.</h3>
+		<br/>
+		<ul style="list-style-type: none;">
+			<li>Programming (JS): Liam Vaughan</li>
+			<li>Styling: Zachary Yule</li>
+			<li>Programming (HTML): Liam Vaughan & Zachary Yule</li>
+			<li>Assets: Zachary Yule & Ethan Coiera</li>
+		</ul>
+		<br/>
+		<button id="creditsBack" onclick="game.changeView('#startMenu')"><span> Back </span></button>
+	</div>
+	<div id="game" class="hidden day">
+		<canvas id="gameCanvas"></canvas>
+	</div>
+	<div id="resetAllUserDataMenu" class="menu hidden">
+		<h3>Are you sure you want to reset all user data?</h3>
+		<h4>This will be irrecoverable if you have not taken a backup!</h4>
+		</p>
+		<button id="resetAllUserDataConfirm" onclick="localStorage.removeItem('save');game.saves = {};game.loadSaveInfo();game.changeView('#settingsMenu')"><span> Yes </span></button>
+		<button id="resetAllUserDataExit" onclick="game.changeView('#settingsMenu')"><span> No </span></button>
+	</div>
+</body>
+</html>
