@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<!-- Hello Zac !-->
 	<title>Flat Earth Simulator</title>
+	<link rel="icon" type="image/x-icon" href="./img/logos/squareLogo.png">
 	<link rel="stylesheet" href="css\game.css"/>
 	<script src="js\jquery-3.6.1.min.js"></script>
 	<script src="js\game.js"></script>
-	<script src="js\ai.js"></script>
 </head>
 <body>
 	<div id="startMenu" class="menu visible">
 		<h1>Flat Earth Simulator</h1>
 		<button id="menuPlay" onclick="game.loadSaveInfo();game.changeView('#saveMenu')"><span> Play </span></button>
+		<br/>
+		<button id="menuControls" onclick="game.changeView('#controlsMenu')"><span> Controls </span></button>
 		<br/>
 		<button id="menuSettings" onclick="game.changeView('#settingsMenu')"><span> Settings </span></button>
 		<br/>
@@ -22,19 +25,19 @@
 		<div id="saveSlot1" class="saveSlot">
 			<h3 id="saveSlot1Name" class="saveTitle">Empty Slot</h3>
 			<p>Time: <span id="saveSlot1Time" class="saveTime"></span></p>
-			<button id="saveSlot1Play" onclick="game.changeView('#saveCreationSettingsMenu', true, 0);" class="savePlay"><span> New Game </span></button>
+			<button id="saveSlot1Play" onclick="game.changeView('#saveCreationSettingsMenu', {slot: 0});" class="savePlay"><span> New Game </span></button>
 		</div>
 		<br/>
 		<div id="saveSlot2" class="saveSlot">
 			<h3 id="saveSlot2Name" class="saveTitle">Empty Slot</h3>
 			<p>Time: <span id="saveSlot2Time" class="saveTime"></span></p>
-			<button id="saveSlot2Play" onclick="game.changeView('#saveCreationSettingsMenu', true, 1);" class="savePlay"><span> New Game </span></button>
+			<button id="saveSlot2Play" onclick="game.changeView('#saveCreationSettingsMenu', {slot: 1});" class="savePlay"><span> New Game </span></button>
 		</div>
 		<br/>
 		<div id="saveSlot3" class="saveSlot">
 			<h3 id="saveSlot3Name" class="saveTitle">Empty Slot</h3>
 			<p>Time: <span id="saveSlot3Time" class="saveTime"></span></p>
-			<button id="saveSlot3Play" onclick="game.changeView('#saveCreationSettingsMenu', true, 2);" class="savePlay"><span> New Game </span></button>
+			<button id="saveSlot3Play" onclick="game.changeView('#saveCreationSettingsMenu', {slot: 2});" class="savePlay"><span> New Game </span></button>
 		</div>
 		<br/>
 		<button id="saveBack" onclick="game.changeView('#startMenu')"><span> Back </span></button>
@@ -47,11 +50,12 @@
 		<button id="saveCreationSettingsBack" onclick="game.changeView('#saveMenu')"><span> Back </span></button>
 	</div>
 	<div id="settingsMenu" class="menu hidden">
-		<button id="resetAllUserData" onclick="game.changeView('#resetAllUserDataMenu')"><span> Reset all user data </span></button>
-		</p>
+		<button id="resetAllUserData" onclick="game.changeView('#resetAllUserDataMenu')"><span> Reset save data </span></button>
+		<br/>
 		<button id="settingsBack" onclick="game.changeView('#startMenu')"><span> Back </span></button>
 	</div>
 	<div id="creditsMenu" class="menu hidden">
+		<img src="./img/logos/horizontalLogo.png" alt="Horizontal Logo" style="width:650px;height:250px;">
 		<h3>This game was created by Liam Vaughan, Zachary Yule and Ethan Coiera.</h3>
 		<br/>
 		<ul style="list-style-type: none;">
@@ -63,8 +67,60 @@
 		<br/>
 		<button id="creditsBack" onclick="game.changeView('#startMenu')"><span> Back </span></button>
 	</div>
-	<div id="game" class="hidden day">
+	<div id="controlsMenu" class="menu hidden">
+		<h1>Controls</h1>
+		<br/>
+		<table>
+			<tr>
+				<th>Action</th>
+				<th>Key</th>
+			</tr>
+			<tr>
+				<td>Jump</td>
+				<td id="controlsUp" onclick="game.changeControls(this, 'up')">W</td>
+			</tr>
+			<tr>
+				<td>Move Left</td>
+				<td id="controlsLeft" onclick="game.changeControls(this, 'left')">A</td>
+			</tr>
+			<tr>
+				<td>Look Forward</td>
+				<td id="controlsDown" onclick="game.changeControls(this, 'down')">S</td>
+			</tr>
+			<tr>
+				<td>Move Right</td>
+				<td id="controlsRight" onclick="game.changeControls(this, 'right')">D</td>
+			</tr>
+			<tr>
+				<td>Attack</td>
+				<td id="" onclick="">Click</td>
+			</tr>
+		</table>
+		<br/>
+		<button id="controlsReset"><span> Reset </span></button>
+		<br/>
+		<button id="controlsBack"><span> Back </span></button>
+	</div>
+	<div id="game" class="hidden day" onclick="game.click(event)">
 		<canvas id="gameCanvas"></canvas>
+	</div>
+	<div id="darkLayer" class="darkLayer hidden"></div>
+	<div id="endScreen" class="darkScreen hidden">
+		<h2>Game Over!</h2>
+		<br/>
+		<p>You tried as hard as you could...but Flat Earth Theory overcame you, using its robotic minions.</p>
+		<p>Score: <span id="endScore"></span></p>
+		<br/>
+		<button id="endBackToMainMenu" onclick="game.changeView('#startMenu')"><span> Back to Main Menu </span></button>
+	</div>
+	<div id="pauseMenu" class="darkScreen hidden">
+		<h2>Game Paused</h2>
+		<br/>
+		<button id="pauseStartGame" onclick="game.resume()"><span>Resume Game </span></button>
+		<br/>
+		<button id="pauseControls" onclick="game.changeView('#controlsMenu', {overlay: '#game', useDarkLayer: true})"><span> Controls </span></button>
+		<br/>
+		<button id="pauseBackToMainMenu" onclick="game.changeView('#startMenu')"><span> Back to Main Menu </span></button>
 	</div>
 	<div id="resetAllUserDataMenu" class="menu hidden">
 		<h3>Are you sure you want to reset all user data?</h3>
