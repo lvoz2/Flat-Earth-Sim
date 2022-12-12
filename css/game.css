@@ -33,11 +33,36 @@ html, body {
     margin: 0;
     background-repeat: no-repeat;
     background-attachment: fixed;
-	# background: url("../img/backgrounds/dayBackground_clouds.png") no-repeat fixed center, linear-gradient(#62d8ff, #9af2ff);
-	background: url("../img/backgrounds/titleBackground.png") no-repeat fixed center, linear-gradient(#000000, #1c1c1c);
+	background: url("../img/backgrounds/titleBackground.gif") no-repeat fixed center, linear-gradient(#000000, #1c1c1c);
 	background-size: 100%;
 	text-align: center;
 	font-family: Joystix;
+}
+.darkScreen {
+	color: white;
+	text-shadow: 4px 0 black, -4px 0 black, 0 4px black, 0 -4px black, 2px 2px black, -2px -2px black, 2px -2px black, -2px 2px black;
+	paint-order: stroke fill;
+    margin: 0;
+	text-align: center;
+	font-family: Joystix;
+	position: absolute;
+	width: 100%;
+	transform: translate(0%, -40%);
+	top: 50%;
+	left: 0;
+	z-index: 3;
+}
+canvas {
+	z-index: 1;
+}
+.darkLayer {
+	z-index: 2;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	top: 0;
+	left: 0;
 }
 button span {
 	white-space: break-spaces;
@@ -75,6 +100,17 @@ input[type=text] {
 	margin: 5px 2px;
 	border: 0px;
 	height: 19px;
+}
+#videoBackground {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
+}
+table {
+	margin-left: auto;
+	margin-right: auto;
 }
 @font-face {
 	font-family: Joystix;
