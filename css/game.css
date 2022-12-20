@@ -33,7 +33,7 @@ html, body {
     margin: 0;
     background-repeat: no-repeat;
     background-attachment: fixed;
-	background: url("../img/backgrounds/titleBackground.gif") no-repeat fixed center, linear-gradient(#000000, #1c1c1c);
+	background: url("../img/backgrounds/titleBackground.png") no-repeat fixed center, linear-gradient(#000000, #1c1c1c);
 	background-size: 100%;
 	text-align: center;
 	font-family: Joystix;
